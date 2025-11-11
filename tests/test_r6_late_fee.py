@@ -1,6 +1,6 @@
 # tests/test_r6_late_fee.py
 import pytest
-import library_service as svc
+import services.library_service as svc
 
 def _borrow_for_fee(isbn="9780000000119"):
     ok, msg = svc.add_book_to_catalog("Late Fee Book", "Author", isbn, 1)

@@ -1,5 +1,5 @@
 # tests/test_r3_borrow.py
-import library_service as svc
+import services.library_service as svc
 
 def _add_and_get_book_id_by_isbn(isbn):
     ok, msg = svc.add_book_to_catalog("Dune", "Frank Herbert", isbn, 1)

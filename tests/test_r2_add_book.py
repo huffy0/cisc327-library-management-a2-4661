@@ -1,5 +1,5 @@
 # tests/test_r2_add_book.py
-import library_service as svc
+import services.library_service as svc
 
 def test_add_book_happy_path():
     ok, msg = svc.add_book_to_catalog("Clean Code", "Robert Martin", "9780000000106", 3)

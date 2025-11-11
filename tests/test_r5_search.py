@@ -1,6 +1,6 @@
 # tests/test_r5_search.py
 import pytest
-import library_service as svc
+import services.library_service as svc
 
 xfail_search_bug = pytest.mark.xfail(reason="search appears buggy, returns empty for valid data")
 

@@ -149,7 +149,7 @@ def search_books_in_catalog(search_term: str, search_type: str = 'title') -> Lis
     if not search_term:
         return []
 
-    all_books = get_all_books()
+    all_books = get_all_books() 
     results = []
 
     for book in all_books:
@@ -177,3 +177,35 @@ def get_patron_status_report(patron_id: str) -> Dict:
     TODO: Implement R7 as per requirements
     """
     return {}
+
+def pay_late_fees(patron_id: str, book_id: int, payment_gateway):
+    """Process late fee payment for a patron."""
+    if not patron_id or not patron_id.isdigit():
+        return {"status": "error", "message": "Invalid patron ID"}
+
+    fee_info = calculate_late_fee_for_book(patron_id, book_id)
+    fee_amount = fee_info.get("fee_amount", 0)
+
+    if fee_amount <= 0:
+        return {"status": "error", "message": "No fees due"}
+
+    try:
+        success = payment_gateway.process_payment(fee_amount)
+        if success:
+            return {"status": "success", "amount": fee_amount}
+        else:
+            return {"status": "declined", "message": "Payment declined"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+def refund_late_fee_payment(transaction_id: str, amount: float, payment_gateway):
+    """Refund a late fee payment."""
+    if not transaction_id or amount <= 0 or amount > 15:
+        return {"status": "error", "message": "Invalid refund request"}
+
+    success = payment_gateway.refund_payment(transaction_id, amount)
+    if success:
+        return {"status": "success", "amount": amount}
+    else:
+        return {"status": "error", "message": "Refund failed"}

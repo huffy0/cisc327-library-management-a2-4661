@@ -1,5 +1,5 @@
 # tests/test_r1_catalog.py
-import library_service as svc
+import services.library_service as svc
 
 def test_catalog_adds_two_distinct_books_with_unique_isbn():
     ok1, _ = svc.add_book_to_catalog("A Title", "B Author", "9780000000102", 1)
